@@ -6,9 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import org.saimse.parsercomb.*;
-import org.saimse.parsercomb.combinators.Many;
-import org.saimse.parsercomb.combinators.Or;
-import org.saimse.parsercomb.combinators.Some;
+import org.saimse.parsercomb.combinators.*;
 import org.saimse.parsercomb.util.*;
 
 import java.util.List;
@@ -73,5 +71,38 @@ public class Combinators {
         Pair<String, List<Character>> result = lowercaseSpanParser.parse("hellO");
         assertEquals(result.a, "O");
         assertEquals(result.b.size(), 4);
+    }
+
+    @Test
+    void testSomeTill() throws BadParseException {
+        Parser<Character> lowercaseParser = new ParseBy(Character::isLowerCase);
+        Parser<Character> periodParser = new CharParser('.');
+
+        Parser<List<Character>> wordParser = new SomeTill<>(lowercaseParser, periodParser);
+
+        assertThrows(BadParseException.class, () -> wordParser.parse("Hello."));
+
+        Pair<String, List<Character>> empty = wordParser.parse(".");
+        assertEquals(empty.a, "");
+        assertEquals(empty.b.size(), 0);
+
+        Pair<String, List<Character>> word = wordParser.parse("hello.");
+        assertEquals(word.a, "");
+        assertEquals(word.b.size(), 5);
+    }
+
+    @Test
+    void testManyTill() throws BadParseException {
+        Parser<Character> lowercaseParser = new ParseBy(Character::isLowerCase);
+        Parser<Character> periodParser = new CharParser('.');
+
+        Parser<List<Character>> wordParser = new ManyTill<>(lowercaseParser, periodParser);
+
+        assertThrows(BadParseException.class, () -> wordParser.parse("Hello."));
+        assertThrows(BadParseException.class, () -> wordParser.parse("."));
+
+        Pair<String, List<Character>> word = wordParser.parse("hello.");
+        assertEquals(word.a, "");
+        assertEquals(word.b.size(), 5);
     }
 }
