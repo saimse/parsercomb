@@ -105,4 +105,40 @@ public class Combinators {
         assertEquals(word.a, "");
         assertEquals(word.b.size(), 5);
     }
+
+    @Test
+    void testBetween() throws BadParseException {
+        Parser<Character> betweenParser = new Between<>(new CharParser('('), new CharParser('a'), new CharParser(')'));
+        Pair<String, Character> result = betweenParser.parse("(a)");
+        assertEquals(result.a, "");
+        assertEquals(result.b, 'a');
+        assertThrows(BadParseException.class, () -> betweenParser.parse("Hello."));
+    }
+
+    @Test
+    void testLeft() throws BadParseException {
+        Parser<Character> leftParser = new Left<>(new CharParser('a'), new CharParser('b'));
+        Pair<String, Character> result = leftParser.parse("ab");
+        assertEquals(result.a, "");
+        assertEquals(result.b, 'a');
+        assertThrows(BadParseException.class, () -> leftParser.parse("Hello."));
+    }
+
+    @Test
+    void testRight() throws BadParseException {
+        Parser<Character> rightParser = new Right<>(new CharParser('a'), new CharParser('b'));
+        Pair<String, Character> result = rightParser.parse("ab");
+        assertEquals(result.a, "");
+        assertEquals(result.b, 'b');
+        assertThrows(BadParseException.class, () -> rightParser.parse("Hello."));
+    }
+    @Test
+    void testAnd() throws BadParseException {
+        Parser<Pair<Character, Character>> andParser = new And<>(new CharParser('a'), new CharParser('b'));
+        Pair<String, Pair<Character, Character>> result = andParser.parse("ab");
+        assertEquals(result.a, "");
+        assertEquals(result.b.a, 'a');
+        assertEquals(result.b.b, 'b');
+        assertThrows(BadParseException.class, () -> andParser.parse("Hello."));
+    }
 }
