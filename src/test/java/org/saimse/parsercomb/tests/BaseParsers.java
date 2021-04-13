@@ -41,4 +41,15 @@ public class BaseParsers {
     void testUnparseString() {
         assertThrows(BadParseException.class, () -> new StringParser("defun").parse("(lambda)"));
     }
+
+    @Test
+    void testParseInteger() throws BadParseException {
+        Pair<String, Integer> result = new IntegerParser().parse("1132 number");
+        assertEquals(result, new Pair<>(" number", 1132), "(Un)parsed results should be \" number\"/1132");
+    }
+
+    @Test
+    void testUnparseInteger() {
+        assertThrows(BadParseException.class, () -> new IntegerParser().parse("twelve"));
+    }
 }
