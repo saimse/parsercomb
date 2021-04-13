@@ -13,6 +13,8 @@ public class ParseBy implements Parser<Character> {
 
     @Override
     public Pair<String, Character> parse(String input) throws BadParseException {
+        if(input.length() == 0) throw new BadParseException();
+
         if(predicate.predicate(input.charAt(0)))
             return new Pair<>(input.substring(1), input.charAt(0));
 
