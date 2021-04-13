@@ -30,4 +30,15 @@ public class BaseParsers {
     void testUnparseChar() {
         assertThrows(BadParseException.class, () -> new CharParser('a').parse("ASDF"));
     }
+
+    @Test
+    void testParseString() throws BadParseException {
+        Pair<String, String> result = new StringParser("function").parse("function add();");
+        assertEquals(result, new Pair<>(" add();", "function"), "(Un)parsed results should be \" add();\"/\"function\"");
+    }
+
+    @Test
+    void testUnparseString() {
+        assertThrows(BadParseException.class, () -> new StringParser("defun").parse("(lambda)"));
+    }
 }
