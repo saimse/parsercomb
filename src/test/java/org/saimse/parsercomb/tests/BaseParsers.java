@@ -52,4 +52,28 @@ public class BaseParsers {
     void testUnparseInteger() {
         assertThrows(BadParseException.class, () -> new IntegerParser().parse("twelve"));
     }
+
+    @Test
+    void testParseFloat() throws BadParseException {
+        Pair<String, Float> result = new FloatParser().parse("11.32 number");
+        assertEquals(result, new Pair<>(" number", 11.32f), "(Un)parsed results should be \" number\"/11.32");
+    }
+
+    @Test
+    void testUnparseFloat() {
+        assertThrows(BadParseException.class, () -> new FloatParser().parse("165"));
+    }
+
+    @Test
+    void testParseNumber() throws BadParseException {
+        Pair<String, Float> result1 = new NumberParser().parse("11.32 number");
+        Pair<String, Float> result2 = new NumberParser().parse("1132 number");
+        assertEquals(result1, new Pair<>(" number", 11.32f), "(Un)parsed results should be \" number\"/11.32");
+        assertEquals(result2, new Pair<>(" number", 1132f), "(Un)parsed results should be \" number\"/1132");
+    }
+
+    @Test
+    void testUnparseNumber() {
+        assertThrows(BadParseException.class, () -> new NumberParser().parse("a.165"));
+    }
 }
