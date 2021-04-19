@@ -141,4 +141,28 @@ public class Combinators {
         assertEquals(result.b.b, 'b');
         assertThrows(BadParseException.class, () -> andParser.parse("Hello."));
     }
+
+    enum StorageSpecifier{
+        e_auto, e_static, e_register, e_extern
+    }
+    @Test
+    void CVarDecl() throws BadParseException{
+        String testString = "int _x = 12;";
+        class Variable{
+            String name;
+            StorageSpecifier storageSpecifier;
+            String type;
+            int value;
+        }
+        Parser<StorageSpecifier> storageSpecifierParser = fmap(str -> {
+            if(str.equals("static")) return StorageSpecifier.e_static;
+            if(str.equals("register")) return StorageSpecifier.e_register;
+            if(str.equals("extern")) return StorageSpecifier.e_extern;
+            return StorageSpecifier.e_auto;
+        }, new Or<>(new StringParser("auto"),
+           new Or<>(new StringParser("static"),
+           new Or<>(new StringParser("register"),
+           new Or<>(new StringParser("extern"),
+           fmap(a -> "", new WhitespaceParser()))))));
+    }
 }
