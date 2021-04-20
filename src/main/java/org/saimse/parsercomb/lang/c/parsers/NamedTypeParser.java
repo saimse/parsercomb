@@ -1,6 +1,8 @@
 package org.saimse.parsercomb.lang.c.parsers;
 
 import org.saimse.parsercomb.Parser;
+import org.saimse.parsercomb.WhitespaceParser;
+import org.saimse.parsercomb.combinators.Left;
 import org.saimse.parsercomb.lang.c.NamedType;
 import org.saimse.parsercomb.lang.c.Type;
 import org.saimse.parsercomb.util.BadParseException;
@@ -10,7 +12,7 @@ public class NamedTypeParser implements Parser<Type> {
     @Override
     public Pair<String, Type> parse(String input) throws BadParseException {
         Pair<String, Pair<Boolean, Boolean>> cv = new CVQualifierParser().parse(input);
-        Pair<String, String> name = new Identifier().parse(cv.a);
+        Pair<String, String> name = new Left<>(new Identifier(), new WhitespaceParser()).parse(cv.a);
         return new Pair<>(name.a, new NamedType(name.b, cv.b.a, cv.b.b));
     }
 }
