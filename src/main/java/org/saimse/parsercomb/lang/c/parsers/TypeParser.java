@@ -15,9 +15,9 @@ public class TypeParser implements Parser<Type> {
     @Override
     public Pair<String, Type> parse(String input) throws BadParseException {
         Pair<String, Type> non_ptr
-                = new Or<>(new PrimitiveTypeParser(), new Or<>(
+                = new Or<>(new PrimitiveTypeParser(),
                            new StructTypeRefParser(),
-                           new NamedTypeParser())).parse(input);
+                           new NamedTypeParser()).parse(input);
 
         Right<Character, Pair<Boolean, Boolean>> asteriskAndCV =
                 new Right<>(new Left<>(new CharParser('*'), new WhitespaceParser()), new CVQualifierParser());

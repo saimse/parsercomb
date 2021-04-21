@@ -160,9 +160,9 @@ public class Combinators {
             if(str.equals("extern")) return StorageSpecifier.e_extern;
             return StorageSpecifier.e_auto;
         }, new Or<>(new StringParser("auto"),
-           new Or<>(new StringParser("static"),
-           new Or<>(new StringParser("register"),
-           new Or<>(new StringParser("extern"),
-           fmap(a -> "", new WhitespaceParser()))))));
+                new StringParser("static"),
+                new StringParser("register"),
+                new StringParser("extern"),
+                fmap(a -> "", new WhitespaceParser())));
     }
 }

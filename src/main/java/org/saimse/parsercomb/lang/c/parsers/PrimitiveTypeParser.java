@@ -37,12 +37,12 @@ public class PrimitiveTypeParser implements Parser<Type> {
         if(longs.b.size() == 2) long_t = PrimitiveType.LONG_T.LONG_LONG_T;
 
         Pair<String, String> typename = new Left<>(
-                new Or<>(new StringParser("int"), new Or<>(
-                         new StringParser("float"), new Or<>(
-                         new StringParser("double"), new Or<>(
+                new Or<>(new StringParser("int"),
+                         new StringParser("float"),
+                         new StringParser("double"),
                          new StringParser("char"),
                          // Might default to int, if unsigned or long are present
-                         fmap(a -> "", new WhitespaceParser()))))),
+                         fmap(a -> "", new WhitespaceParser())),
                 new WhitespaceParser()).parse(longs.a);
         PrimitiveType type;
 
