@@ -5,5 +5,5 @@ import org.junit.platform.suite.api.SelectClasses;
 import org.junit.runner.RunWith;
 
 @RunWith(JUnitPlatform.class)
-@SelectClasses({BaseParsers.class, Combinators.class})
+@SelectClasses({BaseParsers.class, Combinators.class, C.class})
 public class TotalTestSuite {}
