@@ -4,6 +4,7 @@ import org.saimse.parsercomb.CharParser;
 import org.saimse.parsercomb.Parser;
 import org.saimse.parsercomb.StringParser;
 import org.saimse.parsercomb.combinators.LeftToken;
+import org.saimse.parsercomb.combinators.Or;
 import org.saimse.parsercomb.combinators.RightToken;
 import org.saimse.parsercomb.lang.c.expressions.Expression;
 import org.saimse.parsercomb.lang.c.statements.Statement;
@@ -26,14 +27,21 @@ public class WhileLoopParser implements Parser<Statement> {
         }
     }
 
+    private static class WhileParser implements Parser<Statement> {
+        @Override
+        public Pair<String, Statement> parse(String input) throws BadParseException {
+            Pair<String, Expression> condition =
+                    new RightToken<>(new StringParser("while"),
+                            new RightToken<>(new CharParser('('),
+                                    new LeftToken<>(new ExpressionParser(),
+                                            new LeftToken<>(new CharParser(')'), new CharParser(';'))))).parse(input);
+            Pair<String, Statement> body = new StatementParser().parse(condition.a);
+            return new Pair<>(body.a, new WhileLoop(false, condition.b, body.b));
+        }
+    }
+
     @Override
     public Pair<String, Statement> parse(String input) throws BadParseException {
-        Pair<String, Expression> condition =
-                new RightToken<>(new StringParser("while"),
-                new RightToken<>(new CharParser('('),
-                new LeftToken<>(new ExpressionParser(),
-                new LeftToken<>(new CharParser(')'), new CharParser(';'))))).parse(input);
-        Pair<String, Statement> body = new StatementParser().parse(condition.a);
-        return new Pair<>(body.a, new WhileLoop(false, condition.b, body.b));
+        return new Or<>(new DoWhileParser(), new WhileParser()).parse(input);
     }
 }
