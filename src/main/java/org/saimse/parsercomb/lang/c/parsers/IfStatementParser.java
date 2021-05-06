@@ -20,7 +20,7 @@ import static org.saimse.parsercomb.util.FunctorMap.fmap;
 public class IfStatementParser implements Parser<Statement> {
     @Override
     public Pair<String, Statement> parse(String input) throws BadParseException {
-        Pair<String, IfStatement.IfOnlyStatement> start = new IfOnlyStatementParser().parse(input);
+        Pair<String, Statement> start = new IfOnlyStatementParser().parse(input);
         Pair<String, List<IfStatement.IfElseIfStatement>> elseIfs = new Many<>(new IfElseIfStatementParser()).parse(start.a);
 
         Pair<String, IfStatement.IfElseStatement> end;
@@ -30,7 +30,7 @@ public class IfStatementParser implements Parser<Statement> {
             end = fmap(a -> (IfStatement.IfElseStatement) null, new WhitespaceParser()).parse(elseIfs.a);
         }
 
-        return new Pair<>(end.a, new IfStatement(start.b, elseIfs.b.toArray(new IfStatement.IfElseIfStatement[elseIfs.b.size()]), end.b));
+        return new Pair<>(end.a, new IfStatement((IfStatement.IfOnlyStatement) start.b, elseIfs.b.toArray(new IfStatement.IfElseIfStatement[elseIfs.b.size()]), end.b));
     }
 
     public static class IfElseIfStatementParser implements Parser<IfStatement.IfElseIfStatement> {
@@ -59,8 +59,8 @@ public class IfStatementParser implements Parser<Statement> {
         }
     }
 
-    public static class IfOnlyStatementParser implements Parser<IfStatement.IfOnlyStatement> {
-        public Pair<String, IfStatement.IfOnlyStatement> parse(String input) throws BadParseException {
+    public static class IfOnlyStatementParser implements Parser<Statement> {
+        public Pair<String, Statement> parse(String input) throws BadParseException {
             Pair<String, Expression> condition =
                     new Right<>(new StringParser("if"), new Right<>(
                             new WhitespaceParser(), new Right<>(
