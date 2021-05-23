@@ -22,7 +22,7 @@ public class WhileLoopParser implements Parser<Statement> {
             Pair<String, Expression> condition =
                 new RightToken<>(new StringParser("while"),
                     new RightToken<>(new CharParser('('),
-                    new LeftToken<>(new ExpressionParser(),
+                    new LeftToken<>(new ExpressionWithPrimaryParser(),
                     new LeftToken<>(new CharParser(')'),
                             new Left<>(new CharParser(';'), new WhitespaceParser()))))).parse(body.a);
 
@@ -36,7 +36,7 @@ public class WhileLoopParser implements Parser<Statement> {
             Pair<String, Expression> condition =
                     new RightToken<>(new StringParser("while"),
                         new RightToken<>(new CharParser('('),
-                        new LeftToken<>(new ExpressionParser(),
+                        new LeftToken<>(new ExpressionWithPrimaryParser(),
                         new LeftToken<>(new CharParser(')'),
                             new Left<>(new CharParser(';'), new WhitespaceParser()))))).parse(input);
             Pair<String, Statement> body = new StatementParser().parse(condition.a);

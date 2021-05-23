@@ -22,6 +22,7 @@ public class Intersperse<A, B> implements Parser<List<A>> {
         try {
             for(;;) {
                 Pair<String, A> item = l.parse(leftover);
+                leftover = item.a;
                 items.add(item.b);
                 leftover = r.parse(item.a).a;
             }
