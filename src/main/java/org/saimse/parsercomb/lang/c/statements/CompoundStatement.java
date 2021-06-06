@@ -15,7 +15,7 @@ public class CompoundStatement extends Statement {
         for (Statement cs : statements) {
             s.append("\t");
             s.append(cs.toString());
-            s.append(';');
+            //s.append(';');
         }
         s.append("}");
         return s.toString();
