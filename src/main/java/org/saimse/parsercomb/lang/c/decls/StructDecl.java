@@ -13,6 +13,14 @@ public class StructDecl extends Declaration {
             this.type = type;
             this.name = name;
         }
+
+        @Override
+        public String toString() {
+            StringBuilder s = new StringBuilder(type.getFullyQualifiedTypeName());
+            s.append(" ");
+            s.append(name);
+            return s.toString();
+        }
     }
 
     public final String name;
@@ -21,5 +29,21 @@ public class StructDecl extends Declaration {
     public StructDecl(String name, List<StructFieldDecl> fields) {
         this.name = name;
         this.fields = fields;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder("struct ");
+        s.append(name);
+        s.append(" {");
+        s.append('\n');
+        for (StructFieldDecl sfd : fields) {
+            s.append('\t');
+            s.append(sfd.toString());
+            s.append(';');
+            s.append('\n');
+        }
+        s.append("};");
+        return s.toString();
     }
 }

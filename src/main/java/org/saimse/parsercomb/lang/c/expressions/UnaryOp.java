@@ -10,4 +10,51 @@ public class UnaryOp extends Expression {
         this.operator = operator;
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        switch (operator) {
+            case PREFIX_DECR:
+                s.append("--");
+                s.append(value.toString());
+                break;
+            case PREFIX_INCR:
+                s.append("++");
+                s.append(value.toString());
+                break;
+            case POSTFIX_DECR:
+                s.append(value.toString());
+                s.append("--");
+                break;
+            case POSTFIX_INCR:
+                s.append(value.toString());
+                s.append("++");
+                break;
+            case DEREF:
+                s.append("*");
+                s.append(value.toString());
+                break;
+            case REF:
+                s.append("&");
+                s.append(value.toString());
+                break;
+            case PLUS:
+                s.append("+");
+                s.append(value.toString());
+                break;
+            case MIN:
+                s.append("-");
+                s.append(value.toString());
+                break;
+            case LOG_NOT:
+                s.append("!");
+                s.append(value.toString());
+                break;
+            case BIT_NOT:
+                s.append("~");
+                s.append(value.toString());
+        }
+        return s.toString();
+    }
 }

@@ -8,4 +8,13 @@ public class ExpressionStatement extends Statement {
     public ExpressionStatement(Expression expression) {
         this.expression = expression;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder("\n\t");
+        s.append(expression.toString());
+        //s.append('\n');
+        return s.toString();
+     }
+
 }

@@ -41,4 +41,12 @@ public class Literal extends Expression {
         this.integer = null;
         this.str = null;
     }
+
+    @Override
+    public String toString() {
+        return type == Type.INT ? integer.toString()
+                : type == Type.CHAR ? ch.toString()
+                : type == Type.FP ? fp.toString()
+                : str;
+    }
 }

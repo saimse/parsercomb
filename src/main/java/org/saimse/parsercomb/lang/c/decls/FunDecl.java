@@ -20,4 +20,23 @@ public class FunDecl extends Declaration {
         this.params = params;
         this.body = body;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append(ret_t.getFullyQualifiedTypeName());
+        s.append(" ");
+        s.append(name);
+        s.append("(");
+        for (Pair<Type, String> currPair : params) {
+            s.append(currPair.a.getFullyQualifiedTypeName());
+            s.append(" ");
+            s.append(currPair.b);
+            s.append(", ");
+        }
+        s.delete((s.length() - 2), s.length());
+        s.append(")");
+        s.append(body.toString());
+        return s.toString();
+    }
 }
