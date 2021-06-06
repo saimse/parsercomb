@@ -8,4 +8,11 @@ public class ReturnStatement extends Statement {
     public ReturnStatement(Expression retval) {
         this.retval = retval;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder("return ");
+        s.append(retval.toString());
+        return s.toString();
+    }
 }

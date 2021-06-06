@@ -13,4 +13,16 @@ public class VarDecl extends Declaration {
         this.identifier = identifier;
         this.expression = expression;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder(type.getFullyQualifiedTypeName());
+        s.append(" ");
+        s.append(identifier);
+        if (expression != null) {
+            s.append(" = ");
+            s.append(expression.toString());
+        }
+        return s.toString();
+    }
 }

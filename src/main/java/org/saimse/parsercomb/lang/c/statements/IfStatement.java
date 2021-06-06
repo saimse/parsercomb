@@ -17,6 +17,15 @@ public class IfStatement extends Statement {
         public IfElseIfStatement(Expression condition, Statement body) {
             super(condition, body);
         }
+
+        @Override
+        public String toString() {
+            StringBuilder s = new StringBuilder("else if (");
+            s.append(condition.toString());
+            s.append(") ");
+            s.append(body.toString());
+            return s.toString();
+        }
     }
 
     public static class IfElseStatement extends Statement {
@@ -24,6 +33,13 @@ public class IfStatement extends Statement {
 
         public IfElseStatement(Statement body) {
             this.body = body;
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder s = new StringBuilder("else ");
+            s.append(body.toString());
+            return s.toString();
         }
     }
 
@@ -35,5 +51,28 @@ public class IfStatement extends Statement {
             this.condition = condition;
             this.body = body;
         }
+
+        @Override
+        public String toString() {
+            StringBuilder s = new StringBuilder("\nif (");
+            s.append(condition.toString());
+            s.append(") ");
+            s.append(body.toString());
+            return s.toString();
+        }
+    }
+
+    public String toString() {
+        StringBuilder s = new StringBuilder(start.toString());
+        s.append('\n');
+        if(elseIfStatements != null)
+        for (IfElseIfStatement ei : elseIfStatements) {
+            s.append('\n');
+            s.append(ei.toString());
+            s.append('\n');
+        }
+        if(end != null)
+        s.append(end.toString());
+        return s.toString();
     }
 }

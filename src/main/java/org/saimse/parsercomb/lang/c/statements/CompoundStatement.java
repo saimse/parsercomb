@@ -8,4 +8,16 @@ public class CompoundStatement extends Statement {
     public CompoundStatement(List<Statement> statements) {
         this.statements = statements;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder("{" + '\n');
+        for (Statement cs : statements) {
+            s.append("\t");
+            s.append(cs.toString());
+            //s.append(';');
+        }
+        s.append("}");
+        return s.toString();
+    }
 }

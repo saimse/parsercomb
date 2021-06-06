@@ -12,4 +12,17 @@ public class ForLoop extends Statement {
         this.increment = increment;
         this.body = body;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder("for ( ");
+        s.append(init.toString());
+        s.append("; ");
+        s.append(condition.toString());
+        s.append("; ");
+        s.append(increment.toString());
+        s.append(") ");
+        s.append(body.toString());
+        return s.toString();
+    }
 }

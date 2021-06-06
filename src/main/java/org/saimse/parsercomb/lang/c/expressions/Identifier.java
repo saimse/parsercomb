@@ -6,4 +6,9 @@ public class Identifier extends Expression {
     public Identifier(String identifier) {
         this.identifier = identifier;
     }
+
+    @Override
+    public String toString() {
+        return identifier;
+    }
 }

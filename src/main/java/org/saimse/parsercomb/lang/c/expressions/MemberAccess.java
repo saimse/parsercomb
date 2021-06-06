@@ -8,4 +8,12 @@ public class MemberAccess extends Expression {
         this.lvalue = lvalue;
         this.identifier = identifier;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder(lvalue.toString());
+        s.append(".");
+        s.append(identifier);
+        return s.toString();
+    }
 }

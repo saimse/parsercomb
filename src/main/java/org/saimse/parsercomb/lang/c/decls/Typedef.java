@@ -18,4 +18,20 @@ public class Typedef extends Declaration {
     public final Type from;
     public final StructDecl fromStruct;
     public final String to;
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder("typedef ");
+        if (fromStruct == null) {
+            s.append(from.getFullyQualifiedTypeName());
+            s.append(" ");
+            s.append(to);
+        }
+        else if (from == null) {
+            s.append(fromStruct.toString());
+            s.append(" ");
+            s.append(to);
+        }
+        return s.toString();
+    }
 }

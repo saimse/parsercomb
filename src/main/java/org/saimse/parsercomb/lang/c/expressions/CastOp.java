@@ -9,4 +9,13 @@ public class CastOp extends UnaryOp {
         super(OP.CAST, value);
         this.cast_t = cast_t;
     }
+
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append("(");
+        s.append(cast_t.getFullyQualifiedTypeName());
+        s.append(")");
+        s.append(value.toString());
+        return s.toString();
+    }
 }

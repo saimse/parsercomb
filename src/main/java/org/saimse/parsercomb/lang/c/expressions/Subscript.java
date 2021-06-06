@@ -7,4 +7,13 @@ public class Subscript extends Expression {
         this.l = l;
         this.r = r;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder(l.toString());
+        s.append("[");
+        s.append(r.toString());
+        s.append("]");
+        return s.toString();
+    }
 }
